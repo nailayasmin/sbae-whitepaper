@@ -1,0 +1,54 @@
+# Builds the SBAE Quarto book on GitHub and publishes it to GitHub Pages.
+# Runs automatically every time a file in the repository changes.
+
+name: Publish SBAE whitepaper
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get the files
+        uses: actions/checkout@v4
+
+      - name: Install Quarto (with TinyTeX for the PDF)
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
+      - name: Build website, PDF and Word
+        id: full
+        continue-on-error: true
+        run: quarto render
+
+      - name: If the PDF or Word build failed, build the website only
+        if: steps.full.outcome == 'failure'
+        run: quarto render --to html
+
+      - name: Prepare GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the built site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _book
+
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4
