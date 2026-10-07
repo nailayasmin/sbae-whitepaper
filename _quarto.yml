@@ -1,0 +1,113 @@
+project:
+  type: book
+  output-dir: _book
+  render:
+    - "*.md"
+    - "*.qmd"
+    - "!README.md"
+
+book:
+  title: "Sample-Based Area Estimation (SBAE)"
+  subtitle: "A living whitepaper on monitoring forest change with sample-based methods"
+  author: "FAO"
+  date: last-modified
+  date-format: "D MMMM YYYY"
+  favicon: images/favicon.svg
+  search:
+    location: navbar
+    type: overlay
+
+  # Download buttons (PDF needs TinyTeX: run `quarto install tinytex` once)
+  output-file: sbae-whitepaper
+  downloads: [pdf, docx]
+  sharing: [linkedin, twitter]
+
+  # Turn these on after the book is on GitHub (see notes):
+  # repo-url: https://github.com/YOUR-USERNAME/sbae-whitepaper
+  # repo-actions: [edit, issue]
+
+  navbar:
+    background: primary
+    title: "SBAE Whitepaper"
+
+  sidebar:
+    style: docked
+    collapse-level: 1
+
+  page-navigation: true
+  back-to-top-navigation: true
+  reader-mode: true
+
+  page-footer:
+    left: "© FAO · Sample-Based Area Estimation whitepaper"
+    right: "Built with [Quarto](https://quarto.org)"
+
+  chapters:
+    - index.qmd
+    - 00_front_matter/00_front_matter.md
+    - 00_introduction/00_introduction.md
+
+    - part: "General design of the monitoring system"
+      chapters:
+        - 01_general_design_of_monitoring_system/1.1_role_of_sbae_in_monitoring_degradation_reforestation_afforestation.md
+        - 01_general_design_of_monitoring_system/1.2_varying_dates_and_qualities_of_imagery.md
+        - 01_general_design_of_monitoring_system/1.3_maintaining_consistency_as_imagery_improves.md
+
+    - part: 02_sampling_design/2.0_sampling_design_overview.md
+      chapters:
+        - 02_sampling_design/2.1_omission_errors_in_large_strata.md
+        - 02_sampling_design/2.2_sampling_designs_for_multipurpose_monitoring.md
+        - 02_sampling_design/2.3_temporal_tracking_temporary_vs_permanent_sample_units.md
+        - 02_sampling_design/2.4_new_stratification_vs_updating_base_map.md
+        - 02_sampling_design/2.5_estimators_finite_and_infinite_populations.md
+        - 02_sampling_design/2.6_summary_of_section_2.md
+
+    - part: 03_response_design/3.0_response_design_overview.md
+      chapters:
+        - 03_response_design/3.1_point_pixel_multipoint_sample_units.md
+        - 03_response_design/3.2_area_based_sample_unit_design.md
+        - 03_response_design/3.3_labelling_protocols_and_data_summarization.md
+        - 03_response_design/3.4_interpretation_paradigms.md
+        - 03_response_design/3.5_summary_of_section_3.md
+
+    - part: "Quality assurance and quality control"
+      chapters:
+        - 04_quality_assurance_quality_control/4.1_assessing_and_reporting_quality_of_reference_data.md
+
+    - 05_way_forward/05_way_forward.md
+
+  appendices:
+    - 06_annex/annex_I_sampling_strategies.md
+    - 06_annex/annex_II_baseline_surveys_and_results.md
+    - 06_annex/annex_III_participants.md
+
+lightbox: true
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme/custom.scss]
+      dark: [darkly, theme/custom-dark.scss]
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+    include-after-body:
+      - theme/download-buttons.html
+      - theme/comments.html
+    number-sections: false
+    html-math-method: mathjax
+    smooth-scroll: true
+    link-external-newwindow: true
+    anchor-sections: true
+    fig-cap-location: bottom
+    tbl-cap-location: top
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    toc: true
+    number-sections: false
+    colorlinks: true
+    geometry: [margin=2.5cm]
+  docx:
+    toc: true
+    number-sections: false

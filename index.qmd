@@ -1,0 +1,96 @@
+---
+title: "Sample-Based Area Estimation (SBAE)"
+---
+
+
+::: {.hero}
+## A living guide to sample-based area estimation
+
+This whitepaper brings together guidance on designing and implementing sample-based area estimation for forest monitoring, including degradation, reforestation and afforestation. It is updated as methods, imagery and country experience evolve.
+
+[Start reading](00_introduction/00_introduction.md){.btn .btn-light}
+[Sampling design](02_sampling_design/2.0_sampling_design_overview.md){.btn .btn-outline-light}
+[Response design](03_response_design/3.0_response_design_overview.md){.btn .btn-outline-light}
+:::
+
+## Explore the whitepaper
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[1]{.card-num}
+
+#### General design {.unlisted}
+
+The role of SBAE in monitoring, imagery dates and quality, and consistency over time.
+
+[Open section →](01_general_design_of_monitoring_system/1.1_role_of_sbae_in_monitoring_degradation_reforestation_afforestation.md)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[2]{.card-num}
+
+#### Sampling design {.unlisted}
+
+Stratification, omission errors, multipurpose designs, and estimators.
+
+[Open section →](02_sampling_design/2.0_sampling_design_overview.md)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[3]{.card-num}
+
+#### Response design {.unlisted}
+
+Sample unit types, labelling protocols and interpretation paradigms.
+
+[Open section →](03_response_design/3.0_response_design_overview.md)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[4]{.card-num}
+
+#### Quality assurance {.unlisted}
+
+Assessing and reporting the quality of reference data.
+
+[Open section →](04_quality_assurance_quality_control/4.1_assessing_and_reporting_quality_of_reference_data.md)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[5]{.card-num}
+
+#### Way forward {.unlisted}
+
+Open questions and directions for future work.
+
+[Open section →](05_way_forward/05_way_forward.md)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4}
+::: {.section-card}
+[A]{.card-num}
+
+#### Annexes {.unlisted}
+
+Sampling strategies, baseline surveys and results, and participants.
+
+[Open section →](06_annex/annex_I_sampling_strategies.md)
+:::
+:::
+
+:::
+
+## Download
+
+Every page has a **This section (PDF)** button under its title, and the full whitepaper can be downloaded as **PDF** or **Word** from the same place or from the download icon in the top bar.

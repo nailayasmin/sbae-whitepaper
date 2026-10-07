@@ -1,0 +1,118 @@
+<!-- Reviewer comments on every chapter page, using Giscus (GitHub Discussions).
+     Fill in the four values below from https://giscus.app (see setup steps). -->
+<script>
+window.SBAE_GISCUS = {
+  repo:       "PASTE-HERE",   // e.g. "nailayasmin/sbae-whitepaper"
+  repoId:     "PASTE-HERE",   // data-repo-id from giscus.app
+  category:   "Announcements",
+  categoryId: "PASTE-HERE"    // data-category-id from giscus.app
+};
+</script>
+<style>
+  .sbae-comments { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid rgba(17,106,171,0.18); }
+  .sbae-comments h2 { border: none !important; margin-top: 0 !important; display: flex; align-items: center; gap: 0.5rem; }
+  .sbae-comments .sbae-note { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem; }
+  .sbae-comments .sbae-setup { font-size: 0.9rem; padding: 0.8rem 1rem; border: 1px dashed #c58b00; border-radius: 8px; }
+  #sbae-select-btn {
+    position: absolute; z-index: 9999; display: none;
+    font-size: 0.85rem; font-weight: 600; padding: 0.35rem 0.8rem;
+    border-radius: 999px; border: none; cursor: pointer;
+    background: var(--bs-primary, #116AAB); color: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  }
+  .sbae-toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    background: #22313F; color: #fff; padding: 0.6rem 1.1rem; border-radius: 8px;
+    font-size: 0.9rem; z-index: 9999; box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  @media print { .sbae-comments, #sbae-select-btn, .sbae-toast { display: none !important; } }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var main = document.querySelector("main.content");
+  if (!main) return;
+  // No comment box on the home page
+  var path = window.location.pathname;
+  if (/(^|\/)index\.html$/.test(path) || /\/$/.test(path)) return;
+
+  var cfg = window.SBAE_GISCUS;
+  var titleEl = main.querySelector("h1");
+  var pageTitle = titleEl ? titleEl.textContent.trim() : document.title;
+
+  // 1. Comment section at the bottom of the page
+  var box = document.createElement("section");
+  box.className = "sbae-comments";
+  box.id = "comments";
+  box.innerHTML =
+    '<h2><i class="bi bi-chat-square-text"></i> Reviewer comments</h2>' +
+    '<p class="sbae-note">Sign in with a GitHub account to comment. The editorial team reviews all comments. ' +
+    'Tip: select a sentence in the text and click <strong>Comment on this</strong> to quote it.</p>';
+  main.appendChild(box);
+
+  if (!cfg.repo || cfg.repo.indexOf("PASTE") === 0 || cfg.categoryId.indexOf("PASTE") === 0) {
+    box.insertAdjacentHTML("beforeend",
+      '<div class="sbae-setup">Comments are not connected yet. Add the Giscus settings in <code>theme/comments.html</code>.</div>');
+  } else {
+    var isDark = function () { return document.body.classList.contains("quarto-dark"); };
+    var themeFor = function () { return isDark() ? "dark_dimmed" : "light"; };
+    var s = document.createElement("script");
+    s.src = "https://giscus.app/client.js";
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    var d = s.dataset;
+    d.repo = cfg.repo; d.repoId = cfg.repoId;
+    d.category = cfg.category; d.categoryId = cfg.categoryId;
+    d.mapping = "pathname"; d.strict = "1";
+    d.reactionsEnabled = "1"; d.emitMetadata = "0";
+    d.inputPosition = "top"; d.lang = "en"; d.loading = "lazy";
+    d.theme = themeFor();
+    box.appendChild(s);
+    // Follow the site's light/dark toggle
+    new MutationObserver(function () {
+      var f = document.querySelector("iframe.giscus-frame");
+      if (f) f.contentWindow.postMessage({ giscus: { setConfig: { theme: themeFor() } } }, "https://giscus.app");
+    }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  // 2. "Comment on this" button when text is selected
+  var btn = document.createElement("button");
+  btn.id = "sbae-select-btn";
+  btn.type = "button";
+  btn.innerHTML = '<i class="bi bi-chat-left-quote"></i> Comment on this';
+  document.body.appendChild(btn);
+  var quoted = "";
+
+  function toast(msg) {
+    var t = document.createElement("div");
+    t.className = "sbae-toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 4000);
+  }
+
+  document.addEventListener("mouseup", function (e) {
+    if (e.target === btn || btn.contains(e.target)) return;
+    setTimeout(function () {
+      var sel = window.getSelection();
+      var text = sel ? sel.toString().trim() : "";
+      if (text.length < 3 || !sel.rangeCount || !main.contains(sel.anchorNode) || box.contains(sel.anchorNode)) {
+        btn.style.display = "none"; return;
+      }
+      var r = sel.getRangeAt(0).getBoundingClientRect();
+      btn.style.top = (window.scrollY + r.top - 42) + "px";
+      btn.style.left = (window.scrollX + r.left + r.width / 2 - 70) + "px";
+      btn.style.display = "block";
+      quoted = text;
+    }, 10);
+  });
+
+  btn.addEventListener("click", function () {
+    var q = '> "' + quoted.replace(/\s+/g, " ").slice(0, 400) + '"\n\n';
+    btn.style.display = "none";
+    var done = function () {
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+      toast("Quote copied. Paste it into the comment box (Cmd+V) and add your comment.");
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(q).then(done, done); else done();
+  });
+});
+</script>
